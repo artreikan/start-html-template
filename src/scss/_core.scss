@@ -1,0 +1,29 @@
+/**
+ * Основные стили
+ **/
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background: $mainBgColor;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 320px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  @include robotoRegular;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.logo {
+  display: block;
+  @include fluidImage;
+}

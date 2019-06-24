@@ -1,0 +1,96 @@
+@mixin minMax($min-width, $max-width, $padding) {
+  min-width: $min-width;
+  max-width: $max-width;
+  padding: 0 $padding;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+@mixin adaptiveVideo() {
+  position: relative;
+  padding-bottom: 56.25%; /* задаёт высоту контейнера для 16:9 (если 4:3 — поставьте 75%) */
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@mixin visuallyHidden() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+@mixin fluidImage() {
+  max-width: 100%;
+  height: auto;
+  @content;
+}
+
+@mixin robotoRegular() {
+  font-family: $robotoFont;
+  font-weight: 400;
+}
+
+@mixin robotoRegularItalic() {
+  font-family: $robotoFont;
+  font-weight: 400;
+  font-style: italic;
+}
+
+@mixin robotoLight() {
+  font-family: $robotoFont;
+  font-weight: 300;
+}
+
+@mixin robotoLightItalic() {
+  font-family: $robotoFont;
+  font-weight: 300;
+  font-style: italic;
+}
+
+@mixin robotoBold() {
+  font-family: $robotoFont;
+  font-weight: 700;
+}
+
+@mixin dynamicFontSize(
+  $minSizePercent,
+  $maxSize,
+  $minSize,
+  $minWidthPx,
+  $maxWidth,
+  $minWidth
+) {
+  font-size: calc(
+    #{$minSizePercent} + (#{$maxSize} - #{$minSize}) * (100vw - #{$minWidthPx}) /
+      (#{$maxWidth} - #{$minWidth})
+  );
+}
+
+@mixin bgLine() {
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="rgb(255, 255, 255)" stroke-width="1"></line></svg>');
+  }
+}
