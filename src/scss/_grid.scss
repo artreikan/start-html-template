@@ -1,0 +1,29 @@
+$container-width: 1170px;
+$gap: 30px;
+$cols: 12;
+
+@mixin container() {
+  max-width: $container-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 15px;
+}
+
+@mixin row($useMargin: true) {
+  display: flex;
+  flex-wrap: wrap;
+  @if $useMargin {
+    margin-left: -($gap / 2);
+    margin-right: -($gap / 2);
+  }
+}
+
+@mixin col($count, $useMargin: true) {
+  @if $useMargin {
+    width: calc(100% / #{$cols} * #{$count} - #{$gap});
+    margin-left: $gap / 2;
+    margin-right: $gap / 2;
+  } @else {
+    width: calc(100% / #{$cols} * #{$count});
+  }
+}

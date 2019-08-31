@@ -1,5 +1,8 @@
 const gulp = require("gulp");
 const $ = require("gulp-load-plugins")();
+const browserSync = require("browser-sync");
+
+const reload = browserSync.reload;
 
 const path = {
   src: {
@@ -17,52 +20,61 @@ const path = {
   }
 };
 
+gulp.task("html", () => {
+  return gulp
+  .src(path.src.html)
+  .pipe(reload({stream: true}))
+});
+
 gulp.task("styles", () => {
   return gulp
-    .src(path.src.scss)
-    .pipe($.plumber())
-    .pipe($.sass())
-    .pipe(
+  .src(path.src.scss)
+  .pipe($.plumber())
+  .pipe($.sass())
+  .pipe(
       $.autoprefixer({
         grid: true
       })
-    )
-    .pipe(
+  )
+  .pipe(
       $.cleanCss({
         level: 2
       })
-    )
-    .pipe(gulp.dest(path.build.css));
+  )
+  .pipe(reload({stream: true}))
+  .pipe(gulp.dest(path.build.css));
 });
 
 gulp.task("scripts", () => {
   return gulp
-    .src(path.src.js)
-    .pipe($.concat("main.js"))
-    .pipe(
+  .src(path.src.js)
+  .pipe($.concat("main.js"))
+  .pipe(
       $.babel({
         presets: ["@babel/env"]
       })
-    )
-    .pipe(
+  )
+  .pipe(
       $.uglify({
         toplevel: true
       })
-    )
-    .pipe(gulp.dest(path.build.js));
+  )
+  .pipe(reload({stream: true}))
+  .pipe(gulp.dest(path.build.js));
 });
 
 gulp.task("images", () => {
   return gulp
-    .src(path.src.images)
-    .pipe($.imagemin())
-    .pipe(gulp.dest(path.build.images));
+  .src(path.src.images)
+  .pipe($.imagemin())
+  .pipe(reload({stream: true}))
+  .pipe(gulp.dest(path.build.images));
 });
 
 gulp.task("svg-sprite", () => {
   return gulp
-    .src(path.build.svg)
-    .pipe(
+  .src(path.build.svg)
+  .pipe(
       $.svgSprite({
         mode: {
           symbol: {
@@ -70,18 +82,31 @@ gulp.task("svg-sprite", () => {
           }
         }
       })
-    )
-    .pipe(gulp.dest(`${path.build.images}`));
+  )
+  .pipe(reload({stream: true}))
+  .pipe(gulp.dest(`${path.build.images}`));
+});
+
+gulp.task("browserSync", () => {
+  browserSync({
+    server: {
+      baseDir: "./"
+    },
+    port: 1337,
+    open: true,
+    notify: false
+  });
 });
 
 gulp.task("watch", () => {
   gulp.watch(path.src.scss, gulp.series("styles"));
   gulp.watch(path.src.js, gulp.series("scripts"));
+  gulp.watch(path.src.html, gulp.series("html"));
 });
 
 gulp.task(
-  "build",
-  gulp.parallel("styles", "scripts", gulp.series("images", "svg-sprite"))
+    "build",
+    gulp.parallel("styles", "scripts", gulp.series("images", "svg-sprite"))
 );
 
-gulp.task("default", gulp.parallel("watch", "styles", "scripts"));
+gulp.task("default", gulp.parallel("browserSync", "watch", "styles", "scripts"));

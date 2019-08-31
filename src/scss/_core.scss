@@ -14,16 +14,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  @include robotoRegular;
 }
 
 a,
 a:hover {
   text-decoration: none;
   color: #007bff;
-}
-
-.logo {
-  display: block;
-  @include fluidImage;
 }

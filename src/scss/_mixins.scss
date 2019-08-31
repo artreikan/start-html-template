@@ -41,33 +41,6 @@
   @content;
 }
 
-@mixin robotoRegular() {
-  font-family: $robotoFont;
-  font-weight: 400;
-}
-
-@mixin robotoRegularItalic() {
-  font-family: $robotoFont;
-  font-weight: 400;
-  font-style: italic;
-}
-
-@mixin robotoLight() {
-  font-family: $robotoFont;
-  font-weight: 300;
-}
-
-@mixin robotoLightItalic() {
-  font-family: $robotoFont;
-  font-weight: 300;
-  font-style: italic;
-}
-
-@mixin robotoBold() {
-  font-family: $robotoFont;
-  font-weight: 700;
-}
-
 @mixin dynamicFontSize(
   $minSizePercent,
   $maxSize,
@@ -82,15 +55,21 @@
   );
 }
 
-@mixin bgLine() {
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    pointer-events: none;
-    background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="100%" x2="100%" y2="0" stroke="rgb(255, 255, 255)" stroke-width="1"></line></svg>');
-  }
+@mixin centerX() {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin centerY() {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@mixin centerBoth() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
