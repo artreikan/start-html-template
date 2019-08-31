@@ -27,3 +27,9 @@ $cols: 12;
     width: calc(100% / #{$cols} * #{$count});
   }
 }
+
+@mixin autoCol() {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+}
